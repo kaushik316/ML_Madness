@@ -213,6 +213,7 @@ with open('predictions.csv', 'w') as f:
     writer.writerows(results_list)
 
 
+# Method 2: run simulations to see who would win the most teams
 def build_tourneydict():
     tourney_dict = {}
     for index, row in seeds2017_df.iterrows():
@@ -234,7 +235,7 @@ for key,val in team_wins.iteritems():
     team_wins[key] = 0
 
 
-# Method 2: run simulations to see who would win the most teams
+# simulate the tournament any number of times to see who wins the most games
 def run_simulation(iterations):
     tourney_copy = build_tourneydict()
     for i in range(0,iterations):
@@ -265,7 +266,6 @@ def run_simulation(iterations):
 
 
 run_simulation(10000)   
-print team_wins[1437]
 
 wins_list = [(team_dict[key], val) for key, val in team_wins.iteritems()]
 
