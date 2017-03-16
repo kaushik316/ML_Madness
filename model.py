@@ -53,7 +53,6 @@ def get_stat_avg(season, team, field):
         return 0
 
 
-
 def build_season_data():
     for index, row in all_stats_df.iterrows():
         # skip matchups where we dont have stats yet
@@ -83,7 +82,6 @@ def build_season_data():
                 X.append(team2_features + team1_features)
                 y.append(1)
             
-
         stat1_fields = {
             'score': row['Wscore'],
             'fgm%': row['Wfgm%'],
