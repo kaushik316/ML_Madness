@@ -18,8 +18,6 @@ all_stats_df = pd.read_csv("proc_data/FinalStats.csv")
 stat_fields = ["score", "fgm%", "fgm3%", "ftm%", "+/-", "or", "dr", "ast", "blk", "elo", "sor_rk",
                "non_conf_sos", "bpi", "q_win", "q_loss"]
 
-weights = {"score":1, "fgm%":1, "fgm3%":1, "ftm%":1, "or":1, "dr":1, "ast":1, "blk":1, "sor_rk":1,
-           "score":1, "fgm%":1, "fgm3%":1, "ftm%":1, "or":1, "dr":1, "ast":1, "blk":1, "sor_rk":1}
 
 for i in range(2007, 2018):
     team_stats[i] = {}
@@ -127,6 +125,20 @@ def build_season_data():
     return X, y
 
 
+def predict_winner(team1, team2, model, season, stat_fields, proba):
+    features = []
+    for stat in stat_fields:
+        features.append(get_stat_avg(season, team1, stat))
+    
+    for stat in stat_fields:
+        features.append(get_stat_avg(season, team2, stat))
+    
+    if proba:
+        return model.predict_proba(features)
+    else:
+        return model.predict(features)
+
+
 X, y = build_season_data()
 
 # train logistic regression model
@@ -137,7 +149,6 @@ print("Doing cross-validation.")
 print(cross_validation.cross_val_score(model, X, y, cv=10, scoring='accuracy', n_jobs=-1).mean())
 
 model.fit(X, y)
-
 
 # train and test some other models
 train_X = X[:26000]
@@ -166,19 +177,6 @@ possible_matchups = []
 for subset in itertools.combinations(t_teams, 2):
     possible_matchups.append(subset)
 
-
-def predict_winner(team1, team2, model, season, stat_fields, proba):
-    features = []
-    for stat in stat_fields:
-        features.append(get_stat_avg(season, team1, stat))
-    
-    for stat in stat_fields:
-        features.append(get_stat_avg(season, team2, stat))
-    
-    if proba:
-        return model.predict_proba(features)
-    else:
-        return model.predict(features)
 
 # decided to use random forest classifier here, can use any other one by swapping out model param in predict_winner function
 for matchup in possible_matchups:
@@ -222,7 +220,7 @@ def build_tourneydict():
             row["Seed"] = row["Seed"][:3]
         tourney_dict[row["Seed"]] = {}
         tourney_dict[row["Seed"]]["Team"] = row["Team"]
-    #     tourney_dict[row["Seed"]]["Wincount"] = 0
+
     return tourney_dict
 
 
