@@ -5,9 +5,6 @@ import csv
 from sklearn import cross_validation, linear_model
 import itertools
 import pickle
-from sklearn.svm import SVC
-import warnings
-warnings.filterwarnings('ignore')
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
 
