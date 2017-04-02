@@ -3,3 +3,4 @@ data_processing.py
 espn_scraper.py	
 consolidate_data.py
 Model.ipynb
+/notebooks/auth.py
