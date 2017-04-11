@@ -1,5 +1,6 @@
 # ML_Madness
-A machine learning model to (attempt to) predict the NCAA Basketball March Madness tournament
+A machine learning model to (attempt to) predict the NCAA Basketball March Madness tournament. 
+Blog post on this project [here](http://kaushik316-blog.logdown.com/posts/1675209-march-madness-betrayed-by-a-machine)
 
 ### Usage
 Once you have all the files in the data folder downloaded, clean the files using the code in the notebooks folder. Order of execution is:
